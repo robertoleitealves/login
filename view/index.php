@@ -31,6 +31,8 @@ if (isset($_POST['entrar'])) {
             if (mysqli_num_rows($resultado) == 1) {
                 //Converte o resultado em array e torna os dados utilizaveis
                 $dados = mysqli_fetch_array($resultado);
+                //Encerramento de conexão com o banco
+                mysqli_close($connect);
                 $_SESSION['logado'] = true;
                 $_SESSION['id_usuario'] = $dados['id'];
                 header('Location: home.php');
@@ -49,17 +51,20 @@ if (isset($_POST['entrar'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
     <title>LOGIN</title>
 </head>
 
 <body>
     <h1>Login</h1>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <label>Login: </label>
-        <input type="email" name="login" id="login">
-        <label>Senha: </label>
-        <input type="password" name="senha" id="senha">
+        <div class="info">
+        <label class="form-label">Login: </label>
+        <input class="form-control" type="email" name="login" id="login">
+        <label class="form-label">Senha: </label>
+        <input class="form-control" type="password" name="senha" id="senha">
         <button type="submit" name="entrar">Entrar</button>
+        </div>
         <div>
             <?php
             if (count($erros) > 0) { {
